@@ -224,7 +224,7 @@ Given `skill_cls = solution.skills.ai.intrinsic.<skill_name>` and an instance
 | `intrinsic_proto.world.FrameReference` | `<skill>.intrinsic_proto.world.FrameReference` | `object_world_refs_pb2.FrameReference` | `@intrinsic_apis//intrinsic/world/proto:object_world_refs_py_pb2` |
 | `intrinsic_proto.world.TransformNodeReference` | `<skill>.intrinsic_proto.world.TransformNodeReference` | `object_world_refs_pb2.TransformNodeReference` | `@intrinsic_apis//intrinsic/world/proto:object_world_refs_py_pb2` |
 | `intrinsic_proto.world.TransformNodeReferenceByName` | `<skill>.intrinsic_proto.world.TransformNodeReferenceByName` | `object_world_refs_pb2.TransformNodeReferenceByName` | `@intrinsic_apis//intrinsic/world/proto:object_world_refs_py_pb2` |
-| `intrinsic_proto.world.ObjectWorldUpdates` | `update_world.intrinsic_proto.world.ObjectWorldUpdates` | `from intrinsic.world.proto import object_world_updates_pb2`<br>`object_world_updates_pb2.ObjectWorldUpdates` | `@intrinsic-core//intrinsic/world/proto:object_world_updates_py_pb2` |
+| `intrinsic_proto.world.ObjectWorldUpdates` | `update_world.intrinsic_proto.world.ObjectWorldUpdates` | `from intrinsic.world.proto import object_world_updates_pb2`<br>`object_world_updates_pb2.ObjectWorldUpdates` | `@intrinsic-core//intrinsic_sdk/intrinsic/world/proto:object_world_updates_py_pb2` |
 | `intrinsic_proto.icon.JointVec` | `move_robot.intrinsic_proto.icon.JointVec` | `from intrinsic.icon.proto import joint_space_pb2`<br>`joint_space_pb2.JointVec` | `@intrinsic_apis//intrinsic/icon/proto:joint_space_py_pb2` |
 | `intrinsic_proto.Pose` | `<skill>.intrinsic_proto.Pose` *(or `Pose3`)* | `from intrinsic.math.proto import pose_pb2`<br>`pose_pb2.Pose` | `@intrinsic_apis//intrinsic/math/proto:pose_py_pb2` |
 | `intrinsic_proto.Point` | `<skill>.intrinsic_proto.Point` | `from intrinsic.math.proto import point_pb2`<br>`point_pb2.Point` | `@intrinsic_apis//intrinsic/math/proto:point_py_pb2` |
@@ -637,8 +637,7 @@ def build_attach_and_detach_tasks(solution):
      `$EXT/intrinsic-core+/intrinsic_perception/intrinsic/perception/skills/multi_view/estimate_pose_multi_view.proto`
      and `$EXT/intrinsic_apis+/intrinsic/perception/proto/v1/pose_estimate_in_root.proto`
      (`@intrinsic-core//intrinsic_perception/intrinsic/perception/skills/multi_view:estimate_pose_multi_view`)
-   - **Equipment Slots**: `camera_1`, `camera_2`, `camera_3`, `camera_4`
-     (`CameraConfig`), `perception` (`PoseEstimationServiceConfig`)
+   - **Equipment**: `perception` (`PoseEstimationService`)
    - **Params / Result**: `pose_estimator=PoseEstimatorId(id=..., package="ai.intrinsic")`
      (field 1), `capture_data=[capture_action.result.capture_data]`,
      `min_num_instances`, `log_debug_data` ->
@@ -674,13 +673,9 @@ def build_perception_and_spawn_sequence(solution, camera_res, perception_res):
     log_debug_data=False,
   )
   estimate_action = estimate_skill(
-    camera_1=camera_res,
-    camera_2=camera_res,
-    camera_3=camera_res,
-    camera_4=camera_res,
     perception=perception_res,
     pose_estimator=pose_estimator_id_pb2.PoseEstimatorId(
-      id="foundationpose_workpiece_pose_estimator",
+      id="raw_stock_2x3x5_estimator_text",
       package="ai.intrinsic",
     ),
     capture_data=[capture_action.result.capture_data],
